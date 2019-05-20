@@ -1,7 +1,6 @@
 import numpy as np
-# Define useful functions
 
-# Activation function
+# Функция актицации
 def sigmoid(t):
     return 1 / (1 + np.exp(-t))
 
@@ -26,11 +25,8 @@ class NeuralNetwork:
         return self.layer2
 
     def backprop(self):
-        d_weights2 = np.dot(self.layer1.T, 2 * (self.y - self.output) *
-                            sigmoid_derivative(self.output))
-        d_weights1 = np.dot(self.input.T, np.dot(2 * (self.y - self.output) *
-                                                 sigmoid_derivative(self.output), self.weights2.T) *
-                            sigmoid_derivative(self.layer1))
+        d_weights2 = np.dot(self.layer1.T, 2 * (self.y - self.output) * sigmoid_derivative(self.output))
+        d_weights1 = np.dot(self.input.T, np.dot(2 * (self.y - self.output) * sigmoid_derivative(self.output), self.weights2.T) * sigmoid_derivative(self.layer1))
 
         self.weights1 += d_weights1
         self.weights2 += d_weights2
@@ -46,13 +42,12 @@ X = np.array(([1, 1, 1], [1, 1, 0], [0, 0, 0], [1, 1, 0]), dtype=float)
 y = np.array(([1], [0], [1], [1]), dtype=float)
 
 NN = NeuralNetwork(X, y)
-for i in range(1500):  # trains the NN 1,000 times
-    if i % 100 == 0:
-        print("for iteration # " + str(i) + "\n")
-        print("Input : \n" + str(X))
-        print("Actual Output: \n" + str(y))
-        print("Predicted Output: \n" + str(NN.feedforward()))
-        print("Loss: \n" + str(np.mean(np.square(y - NN.feedforward()))))  # mean sum squared loss
-        print("\n")
+for i in range(1000):  # trains the NN 1,000 times
+    print("for iteration # " + str(i) + "\n")
+    print("Input : \n" + str(X))
+    print("Actual Output: \n" + str(y))
+    print("Predicted Output: \n" + str(NN.feedforward()))
+    print("Loss: \n" + str(np.mean(np.square(y - NN.feedforward()))))  # mean sum squared loss
+    print("\n")
 
 NN.train(X, y)
