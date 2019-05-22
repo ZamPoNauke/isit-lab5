@@ -200,7 +200,7 @@ if __name__ == '__main__':
     y = np.array([[0], [0], [0], [1]])
 
     # Train the neural network
-    errors = nn.train(X, y, 0.3, 10290)
+    errors = nn.train(X, y, 0.3, 500)
     print('Accuracy: %.2f%%' % (nn.accuracy(nn.predict(X), y.flatten()) * 100))
 
     # Plot changes in mse
