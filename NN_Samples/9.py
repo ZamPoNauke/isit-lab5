@@ -18,9 +18,9 @@ class NeuralNetwork:
             output = self.think(training_set_inputs)
             error = training_set_outputs - output  # высчитываем ошибку на основе реальных полученных значений и обучения
 
-            # Multiply the error by the input and again by the gradient of the Sigmoid curve.
-            # This means less confident weights are adjusted more.
-            # This means inputs, which are zero, do not cause changes to the weights.
+            # Умножает ошибку на входе на градиент сигмовидной кривой.
+            # (веса, которые отклонены сильнее корректируются больше)
+            # (входные данные, которые юлизки к нулю, не вызывают изменения весов)
             adjustment = dot(training_set_inputs.T, error * self.__sigmoid_derivative(output))
 
             # Adjust the weights.
