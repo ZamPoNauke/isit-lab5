@@ -70,17 +70,20 @@ if __name__ == "__main__":
     print(folder_line)
 
     training_set_inputs = array([])
-    training_set_data = []
+    training_set_inputs_data = []
+    training_set_output_data = []
     for i in os.listdir(folder_line):
-        training_set_data.append(image_to_data(i))  # добавляем данные всех файлов в массив
+        training_set_inputs_data.append(image_to_data(i))  # добавляем данные всех файлов в массив
+        training_set_output_data.append(1)
 
-    training_set_inputs = array(training_set_data)
+    training_set_inputs = array(training_set_inputs_data)
+    training_set_outputs = array([[training_set_output_data]]).T
 
     # training_set_inputs = array([image_to_data(os.path.dirname(os.path.join(folder_line, '1.png'))),
     #                              image_to_data(os.path.dirname(os.path.join(folder_line, '2.png'))),
     #                              image_to_data(os.path.dirname(os.path.join(folder_line, '3.png')))
     #                              ])
-    training_set_outputs = array([[1, 1, 1]]).T
+    # training_set_outputs = array([[1, 1, 1]]).T
 
     neural_network_line.train(training_set_inputs, training_set_outputs, 10000)  # обучаем нейроную сеть на наших данных
     neural_network_line.weight_print()
