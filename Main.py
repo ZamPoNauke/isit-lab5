@@ -34,7 +34,8 @@ class NeuralNetwork:
     def train(self, training_set_inputs, training_set_outputs, number_of_training_iterations):
         for iteration in range(number_of_training_iterations):
             output = self.think(training_set_inputs)
-            error = training_set_outputs - output  # Высчит. ошибку на основе реальных полученных значений и обучения
+            # Высчит. ошибку на основе реальных полученных значений и обучения
+            error = training_set_outputs - output
 
             # Умножает ошибку на входе на градиент сигмовидной кривой.
             # (веса, которые отклонены сильнее корректируются больше)
@@ -42,6 +43,7 @@ class NeuralNetwork:
             adjustment = dot(training_set_inputs.T, error * self.__sigmoid_derivative(output))
 
             # Изменим веса
+            print('Веса', self.synaptic_weights, '\n', adjustment)
             self.synaptic_weights += adjustment
 
     def think(self, inputs):
@@ -64,20 +66,24 @@ if __name__ == "__main__":
     neural_network_line.weight_print()
 
     # получаем путь до файла что бы работать с файлами в папках
-    path_to_current_file = os.path.realpath(__file__)
-    path_to_current_folder = os.path.dirname(path_to_current_file)
-    folder_line = os.path.dirname(os.path.join(path_to_current_folder, 'images\line/'))
+    # path_to_current_folder = os.getcwd()
+    # folder_line = os.path.join(path_to_current_folder, 'images\line/')
+    folder_line = os.path.join(os.getcwd(), 'images\line\\')
     print(folder_line)
 
     training_set_inputs = array([])
     training_set_inputs_data = []
     training_set_output_data = []
     for i in os.listdir(folder_line):
-        training_set_inputs_data.append(image_to_data(i))  # добавляем данные всех файлов в массив
-        training_set_output_data.append(1)
+        fullname = os.path.join(folder_line, str(i))
+        if os.path.isfile(fullname):
+            training_set_inputs_data.append(image_to_data(fullname))  # добавляем данные всех файлов в массив
+            training_set_output_data.append(1)
 
     training_set_inputs = array(training_set_inputs_data)
-    training_set_outputs = array([[training_set_output_data]]).T
+    print(training_set_inputs)
+    training_set_outputs = array([training_set_output_data]).T
+    print(training_set_outputs)
 
     # training_set_inputs = array([image_to_data(os.path.dirname(os.path.join(folder_line, '1.png'))),
     #                              image_to_data(os.path.dirname(os.path.join(folder_line, '2.png'))),
@@ -85,7 +91,7 @@ if __name__ == "__main__":
     #                              ])
     # training_set_outputs = array([[1, 1, 1]]).T
 
-    neural_network_line.train(training_set_inputs, training_set_outputs, 10000)  # обучаем нейроную сеть на наших данных
+    neural_network_line.train(training_set_inputs, training_set_outputs, 100)  # обучаем нейроную сеть на наших данных
     neural_network_line.weight_print()
 
     # Test the neural network with a new situation.
