@@ -27,7 +27,11 @@ class NeuralNetwork:
             self.synaptic_weights += adjustment
 
     def think(self, inputs):
-        return self.__sigmoid(dot(inputs, self.synaptic_weights))  # выведем результат нашей нейронной сети
+        print('\ninputs:\n', inputs)
+        print(' веса:', self.synaptic_weights.T)
+        print(' результат:', dot(inputs, self.synaptic_weights).T)  # на основе весов и входных данных
+        print(' результат после сигмоида:', self.__sigmoid(dot(inputs, self.synaptic_weights)).T)
+        return self.__sigmoid(dot(inputs, self.synaptic_weights))  # результат нашей нейронной сети
 
 
 if __name__ == "__main__":
@@ -40,7 +44,7 @@ if __name__ == "__main__":
     training_set_inputs = array([[0, 0, 1], [1, 1, 1], [1, 0, 1], [0, 1, 1]])
     training_set_outputs = array([[0, 1, 1, 0]]).T
 
-    neural_network.train(training_set_inputs, training_set_outputs, 100000)
+    neural_network.train(training_set_inputs, training_set_outputs, 15)
 
     print("Новые веса после тренировки: ")
     print(neural_network.synaptic_weights, '\n')
