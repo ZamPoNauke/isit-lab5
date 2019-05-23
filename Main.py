@@ -63,21 +63,23 @@ if __name__ == "__main__":
     # обучающая выборка (входные и выходные нейроны)
     neural_network_line.weight_print()
 
-    # получаем путь до файла что бы работать
+    # получаем путь до файла что бы работать с файлами в папках
     path_to_current_file = os.path.realpath(__file__)
     path_to_current_folder = os.path.dirname(path_to_current_file)
     folder_line = os.path.dirname(os.path.join(path_to_current_folder, 'images\line/'))
     print(folder_line)
 
     training_set_inputs = array([])
+    training_set_data = []
     for i in os.listdir(folder_line):
-        print(i)
-        append(training_set_inputs, image_to_data(i))
+        training_set_data.append(image_to_data(i))  # добавляем данные всех файлов в массив
 
-    training_set_inputs = array([image_to_data(os.path.dirname(os.path.join(folder_line, '1.png'))),
-                                 image_to_data(os.path.dirname(os.path.join(folder_line, '2.png'))),
-                                 image_to_data(os.path.dirname(os.path.join(folder_line, '3.png')))
-                                 ])
+    training_set_inputs = array(training_set_data)
+
+    # training_set_inputs = array([image_to_data(os.path.dirname(os.path.join(folder_line, '1.png'))),
+    #                              image_to_data(os.path.dirname(os.path.join(folder_line, '2.png'))),
+    #                              image_to_data(os.path.dirname(os.path.join(folder_line, '3.png')))
+    #                              ])
     training_set_outputs = array([[1, 1, 1]]).T
 
     neural_network_line.train(training_set_inputs, training_set_outputs, 10000)  # обучаем нейроную сеть на наших данных
