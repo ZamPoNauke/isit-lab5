@@ -7,6 +7,7 @@ def image_to_data(image_file):  # принимаем файл и преобра�
 
     img = cv2.imread(image_file)
     data = []
+    print(image_file)
 
     for i in img:
         for j in i:
@@ -70,7 +71,7 @@ def learning(NN_name, folder):
             training_set_inputs_data.append(image_to_data(fullname))  # добавляем данные всех файлов в массив
             training_set_output_data.append(1)
 
-    folder_line = os.path.join(os.getcwd(), 'images\\line\\')
+    folder_line = os.path.join(os.getcwd(), 'images/line/')
     for folder in os.listdir(folder_line):
         fullname = os.path.join(folder_line, str(folder))
         if os.path.isfile(fullname):
@@ -85,6 +86,7 @@ def learning(NN_name, folder):
     NN_name.train(training_set_inputs, training_set_outputs, 500)  # обучаем нейроную сеть на наших данных
     # NN_name.weight_print()
 
+
 if __name__ == "__main__":
     # инициализируем нейронную сеть
     neural_network_tang = NeuralNetwork('Треугольник')
@@ -93,13 +95,13 @@ if __name__ == "__main__":
 
     whole_network = [neural_network_tang, neural_network_plus, neural_network_squa]
 
-    learning(neural_network_tang, 'images\\tangle\\')
-    learning(neural_network_plus, 'images\\plus\\')
-    learning(neural_network_squa, 'images\\square\\')
+    learning(neural_network_tang, 'images/tangle/')
+    learning(neural_network_plus, 'images/plus/')
+    learning(neural_network_squa, 'images/square/')
 
     best_result = 0.0
     best_result_name = ''
-    image = ('D:\\Development\\GitHub\\isit-lab5\\images\\test.png')
+    image = ('/Users/ivan/Documents/GitHub/isit-lab5/images/test.png')
     print("\nПредскажем новую ситуацию на основе изображения -> ?: ")
     for perceptron in whole_network:
         if float(perceptron.think(image_to_data(image))) > best_result:
